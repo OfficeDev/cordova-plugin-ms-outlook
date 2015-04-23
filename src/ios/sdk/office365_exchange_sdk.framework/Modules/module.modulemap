@@ -1,0 +1,6 @@
+framework module office365_exchange_sdk {
+  umbrella header "office365_exchange_sdk.h"
+
+  export *
+  module * { export * }
+}

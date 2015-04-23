@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+ Copyright (c) Microsoft Open Technologies, Inc.  All Rights Reserved. 
+ Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
+-->
+<plugin id="cordova-plugin-ms-outlook" version="0.5.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Office365 Outlook for Cordova</name>
+    <description>Microsoft Office 365 Outlook Services Client for Apache Cordova</description>
+
+    <license>Apache 2.0</license>
+    <keywords>microsoft, office, outlook, mail</keywords>
+    <repo>https://github.com/OfficeDev/cordova-plugin-ms-outlook</repo>
+    <issue>https://github.com/OfficeDev/cordova-plugin-ms-outlook/issues</issue>
+
+    <dependency id="cordova-plugin-ms-office-rest-client" url="https://github.com/MSOpenTech/cordova-plugin-ms-office-rest-client.git"/>
+
+    <js-module name="utility" src="www/utility.js"/>
+
+    <js-module name="Exchange" src="www/Exchange.js">
+        <clobbers target="Microsoft.OutlookServices" />
+    </js-module>
+
+    <js-module name="Entity" src="www/Entity.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Items" src="www/Items.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Fetchers" src="www/Fetchers.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Contacts" src="www/Contacts.js">
+        <runs />
+    </js-module>
+
+    <js-module name="ContactFolders" src="www/ContactFolders.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Folders" src="www/Folders.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Calendars" src="www/Calendars.js">
+        <runs />
+    </js-module>
+
+    <js-module name="CalendarGroups" src="www/CalendarGroups.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Events" src="www/Events.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Messages" src="www/Messages.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Attachments" src="www/Attachments.js">
+        <runs />
+    </js-module>
+
+    <js-module name="ItemHelpers" src="www/ItemHelpers.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Users" src="www/Users.js">
+        <runs />
+    </js-module>
+
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="OutlookServices">
+                <param name="android-package" value="com.msopentech.o365.outlookServices.OutlookServicesProxy"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/ODataMethodArgs.java" target-dir="src/com/msopentech/o365/outlookServices" />
+        <source-file src="src/android/OutlookServicesProxy.java" target-dir="src/com/msopentech/o365/outlookServices" />
+        <source-file src="src/android/OutlookServicesMethodsImpl.java" target-dir="src/com/msopentech/o365/outlookServices" />
+
+        <framework src="src/android/outlook-services.gradle" custom="true" type="gradleReference"/>
+        <hook type="after_plugin_install" src="scripts/afterPluginInstall-android.js" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="OutlookServices">
+                <param name="ios-package" value="OutlookServicesProxy" />
+            </feature>
+        </config-file>
+        
+        <header-file src="src/ios/OutlookServicesProxy.h" />
+        <source-file src="src/ios/OutlookServicesProxy.m" />
+
+        <header-file src="src/ios/ODataContext.h" />
+        <source-file src="src/ios/ODataContext.m" />
+
+        <framework src="src/ios/sdk/office365_exchange_sdk.framework" custom="true"/>
+
+    </platform>
+
+    <platform name="windows">
+        <js-module src="src/windows/OutlookServicesProxy.js">
+            <runs />
+        </js-module>
+    </platform>
+</plugin>

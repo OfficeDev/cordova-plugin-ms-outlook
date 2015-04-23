@@ -1,0 +1,33 @@
+{
+  "name": "cordova-plugin-ms-outlook",
+  "version": "0.5.0",
+  "description": "Microsoft Office 365 Outlook Services Client for Apache Cordova",
+  "cordova": {
+    "id": "cordova-plugin-ms-outlook",
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OfficeDev/cordova-plugin-ms-outlook.git"
+  },
+  "keywords": [
+    "microsoft",
+    "office",
+    "outlook",
+    "mail",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows"
+  ],
+  "author": "MSOpenTech",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/OfficeDev/cordova-plugin-ms-outlook/issues"
+  },
+  "homepage": "https://github.com/OfficeDev/cordova-plugin-ms-outlook#readme"
+}
