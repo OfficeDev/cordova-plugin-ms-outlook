@@ -5,7 +5,7 @@
 -->
 <plugin id="cordova-plugin-ms-outlook-tests" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
    
-    <dependency id="cordova-plugin-test-framework" url="https://github.com/apache/cordova-plugin-test-framework.git" />
+    <dependency id="cordova-plugin-test-framework" />
 
     <name>Office365 Outlook tests suite</name>
     <js-module name="tests" src="www/tests.js" />

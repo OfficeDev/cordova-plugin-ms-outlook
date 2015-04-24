@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Open Technologies, Inc.  All rights reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-/* global cordova, exports, Microsoft.OutlookServices, O365Auth, jasmine, describe, it, expect, beforeEach, afterEach, pending */
+/* global cordova, exports, Microsoft, jasmine, describe, xdescribe, it, xit, expect, beforeEach, afterEach, pending */
 
 var RESOURCE_URL = 'https://outlook.office365.com';
 var OFFICE_ENDPOINT_URL = 'https://outlook.office365.com/ews/odata';
@@ -72,8 +72,8 @@ exports.defineAutoTests = function () {
 
         function fail(done, err) {
             expect(err).toBeUndefined();
-            if (err != null) {
-                if (err.responseText != null) {
+            if (err !== null) {
+                if (err.responseText !== null) {
                     expect(err.responseText).toBeUndefined();
                     console.error('Error: ' + err.responseText);
                 } else {
@@ -82,7 +82,7 @@ exports.defineAutoTests = function () {
             }
 
             done();
-        };
+        }
 
         beforeEach(function () {
             var that = this;
