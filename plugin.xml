@@ -83,8 +83,9 @@
         <source-file src="src/android/ODataMethodArgs.java" target-dir="src/com/msopentech/o365/outlookServices" />
         <source-file src="src/android/OutlookServicesProxy.java" target-dir="src/com/msopentech/o365/outlookServices" />
         <source-file src="src/android/OutlookServicesMethodsImpl.java" target-dir="src/com/msopentech/o365/outlookServices" />
+        <lib-file src="src/android/lib/outlook-services-0.13.0.jar" />
 
-        <framework src="src/android/outlook-services.gradle" custom="true" type="gradleReference"/>
+        <!-- <framework src="src/android/outlook-services.gradle" custom="true" type="gradleReference"/> -->
         <hook type="after_plugin_install" src="scripts/afterPluginInstall-android.js" />
     </platform>
 
