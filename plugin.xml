@@ -17,7 +17,7 @@
     <js-module name="utility" src="www/utility.js"/>
 
     <js-module name="Exchange" src="www/Exchange.js">
-        <clobbers target="Microsoft.OutlookServices" />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Entity" src="www/Entity.js">
@@ -25,7 +25,7 @@
     </js-module>
 
     <js-module name="Items" src="www/Items.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Fetchers" src="www/Fetchers.js">
@@ -33,47 +33,46 @@
     </js-module>
 
     <js-module name="Contacts" src="www/Contacts.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="ContactFolders" src="www/ContactFolders.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Folders" src="www/Folders.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Calendars" src="www/Calendars.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="CalendarGroups" src="www/CalendarGroups.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Events" src="www/Events.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Messages" src="www/Messages.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Attachments" src="www/Attachments.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="ItemHelpers" src="www/ItemHelpers.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <js-module name="Users" src="www/Users.js">
-        <runs />
+        <merges target="Microsoft.OutlookServices" />
     </js-module>
 
     <platform name="android">
-
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="OutlookServices">
                 <param name="android-package" value="com.msopentech.o365.outlookServices.OutlookServicesProxy"/>
@@ -95,7 +94,7 @@
                 <param name="ios-package" value="OutlookServicesProxy" />
             </feature>
         </config-file>
-        
+
         <header-file src="src/ios/OutlookServicesProxy.h" />
         <source-file src="src/ios/OutlookServicesProxy.m" />
 
@@ -103,7 +102,6 @@
         <source-file src="src/ios/ODataContext.m" />
 
         <framework src="src/ios/sdk/office365_exchange_sdk.framework" custom="true"/>
-
     </platform>
 
     <platform name="windows">

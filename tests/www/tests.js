@@ -228,6 +228,79 @@ exports.defineAutoTests = function () {
                 expect(Microsoft.OutlookServices.Client).toEqual(jasmine.any(Function));
             });
 
+            it("should have all necessary types", function () {
+                var enums = [
+                    Microsoft.OutlookServices.AttendeeType,
+                    Microsoft.OutlookServices.BodyType,
+                    Microsoft.OutlookServices.DayOfWeek,
+                    Microsoft.OutlookServices.EventType,
+                    Microsoft.OutlookServices.FreeBusyStatus,
+                    Microsoft.OutlookServices.Importance,
+                    Microsoft.OutlookServices.MeetingMessageType,
+                    Microsoft.OutlookServices.RecurrencePatternType,
+                    Microsoft.OutlookServices.RecurrenceRangeType,
+                    Microsoft.OutlookServices.ResponseType,
+                    Microsoft.OutlookServices.WeekIndex
+                ];
+                for(var i = 0; i < enums.length; i++) {
+                    expect(enums[i]).toBeDefined();
+                    expect(enums[i]).toEqual(jasmine.any(Object));
+                }
+
+                var classes = [
+                    Microsoft.OutlookServices.Attachment,
+                    //Microsoft.OutlookServices.AttachmentFetcher,
+                    Microsoft.OutlookServices.Attachments,
+                    Microsoft.OutlookServices.Attendee,
+                    Microsoft.OutlookServices.Calendar,
+                    Microsoft.OutlookServices.CalendarFetcher,
+                    Microsoft.OutlookServices.CalendarGroup,
+                    Microsoft.OutlookServices.CalendarGroupFetcher,
+                    Microsoft.OutlookServices.CalendarGroups,
+                    Microsoft.OutlookServices.Calendars,
+                    Microsoft.OutlookServices.Client,
+                    Microsoft.OutlookServices.Contact,
+                    //Microsoft.OutlookServices.ContactFetcher,
+                    Microsoft.OutlookServices.ContactFolder,
+                    Microsoft.OutlookServices.ContactFolderFetcher,
+                    Microsoft.OutlookServices.ContactFolders,
+                    Microsoft.OutlookServices.Contacts,
+                    Microsoft.OutlookServices.EmailAddress,
+                    //Microsoft.OutlookServices.Entity,
+                    //Microsoft.OutlookServices.EntityFetcher,
+                    Microsoft.OutlookServices.Event,
+                    //Microsoft.OutlookServices.EventFetcher,
+                    Microsoft.OutlookServices.Events,
+                    Microsoft.OutlookServices.FileAttachment,
+                    //Microsoft.OutlookServices.FileAttachmentFetcher,
+                    Microsoft.OutlookServices.Folder,
+                    Microsoft.OutlookServices.FolderFetcher,
+                    Microsoft.OutlookServices.Folders,
+                    Microsoft.OutlookServices.Item,
+                    Microsoft.OutlookServices.ItemAttachment,
+                    //Microsoft.OutlookServices.ItemAttachmentFetcher,
+                    Microsoft.OutlookServices.ItemBody,
+                    Microsoft.OutlookServices.ItemFetcher,
+                    Microsoft.OutlookServices.Location,
+                    Microsoft.OutlookServices.Message,
+                    //Microsoft.OutlookServices.MessageFetcher,
+                    Microsoft.OutlookServices.Messages,
+                    Microsoft.OutlookServices.PatternedRecurrence,
+                    Microsoft.OutlookServices.PhysicalAddress,
+                    Microsoft.OutlookServices.Recipient,
+                    Microsoft.OutlookServices.RecurrencePattern,
+                    Microsoft.OutlookServices.RecurrenceRange,
+                    Microsoft.OutlookServices.ResponseStatus,
+                    Microsoft.OutlookServices.User,
+                    Microsoft.OutlookServices.UserFetcher,
+                    Microsoft.OutlookServices.Users
+                ];
+                for(var i = 0; i < classes.length; i++) {
+                    expect(classes[i]).toBeDefined();
+                    expect(classes[i]).toEqual(jasmine.any(Function));
+                }
+            });
+
             it('should be able to create a new client', function () {
                 var client = this.client;
 
@@ -417,7 +490,7 @@ exports.defineAutoTests = function () {
         xdescribe("ContactFolders namespace", function () {
             // Note: contactFolders are readonly on server side, so add/update/delete methods is being rejected
             // with HTTP 405 Unsupported so we don't test them here
-            // Before running unit test, test ContactFolder must be created manually        
+            // Before running unit test, test ContactFolder must be created manually
 
             it("should be able to get user's contact folders", function (done) {
                 contactFolders.getContactFolders().fetchAll().then(function (cf) {
@@ -742,7 +815,7 @@ exports.defineAutoTests = function () {
                                 expect(fetchedCal).toEqual(jasmine.any(Calendars.Calendar));
                                 expect(fetchedCal.Name).toEqual(createdCal.Name);
 
-                                // Workaround for afterEach cleanup, which is not consecutive 
+                                // Workaround for afterEach cleanup, which is not consecutive
                                 fetchedCal.delete().then(function () {
                                     done();
                                 }, fail.bind(this, done));
@@ -753,7 +826,7 @@ exports.defineAutoTests = function () {
             });
         });
 
-        describe("Events namespace", function () {           
+        describe("Events namespace", function () {
             it("should be able to create a new event", function (done) {
                 events.addEvent(createEvent()).then(function (added) {
                     tempEntities.push(added);
@@ -951,7 +1024,7 @@ exports.defineAutoTests = function () {
             });
         });
 
-        describe("Messages namespace", function () {            
+        describe("Messages namespace", function () {
             var backInterval;
 
             beforeEach(function () {
@@ -1556,14 +1629,14 @@ exports.defineAutoTests = function () {
         describe("Attachments namespace", function () {
             var backInterval;
 
-            beforeEach(function () {              
+            beforeEach(function () {
                 // increase standart jasmine timeout up to 10 seconds because to some tests
                 // are perform some time consumpting operations (e.g. send, reply, forward)
                 backInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000; //15000;
             });
 
-            afterEach(function () {               
+            afterEach(function () {
                 // revert back default jasmine timeout
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = backInterval;
             });
