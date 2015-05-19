@@ -3,7 +3,7 @@
 var Users = require('./Users').Users;
 var UserFetcher = require('./Users').UserFetcher;
 var Deferred = require('./utility').Utility.Deferred;
-var ItemHelpers = require('./ItemHelpers');
+var Types = require('./Types');
 
 var Exchange = {
 };
@@ -77,40 +77,40 @@ Object.defineProperty(Client.prototype, "users", {
 });
 
 // Enums
-Exchange.AttendeeType = ItemHelpers.AttendeeType;
-Exchange.BodyType = ItemHelpers.BodyType;
-Exchange.DayOfWeek = ItemHelpers.DayOfWeek;
-Exchange.EventType = ItemHelpers.EventType;
-Exchange.FreeBusyStatus = ItemHelpers.FreeBusyStatus;
-Exchange.Importance = ItemHelpers.Importance;
-Exchange.MeetingMessageType = ItemHelpers.MeetingMessageType;
-Exchange.RecurrencePatternType = ItemHelpers.RecurrencePatternType;
-Exchange.RecurrenceRangeType = ItemHelpers.RecurrenceRangeType;
-Exchange.ResponseType = ItemHelpers.ResponseType;
-Exchange.WeekIndex = ItemHelpers.WeekIndex;
+Exchange.AttendeeType = Types.AttendeeType;
+Exchange.BodyType = Types.BodyType;
+Exchange.DayOfWeek = Types.DayOfWeek;
+Exchange.EventType = Types.EventType;
+Exchange.FreeBusyStatus = Types.FreeBusyStatus;
+Exchange.Importance = Types.Importance;
+Exchange.MeetingMessageType = Types.MeetingMessageType;
+Exchange.RecurrencePatternType = Types.RecurrencePatternType;
+Exchange.RecurrenceRangeType = Types.RecurrenceRangeType;
+Exchange.ResponseType = Types.ResponseType;
+Exchange.WeekIndex = Types.WeekIndex;
 
 // Classes
 Exchange.Attachment = require('./Attachments').Attachment;
-Exchange.Attendee = ItemHelpers.Attendee;
+Exchange.Attendee = Types.Attendee;
 Exchange.Calendar = require('./Calendars').Calendar;
 Exchange.CalendarGroup = require('./CalendarGroups').CalendarGroup;
 Exchange.Contact = require('./Contacts').Contact;
 Exchange.ContactFolder = require('./ContactFolders').ContactFolder;
-Exchange.EmailAddress = ItemHelpers.EmailAddress;
+Exchange.EmailAddress = Types.EmailAddress;
 Exchange.Event = require('./Events').Event;
 Exchange.FileAttachment = require('./Attachments').FileAttachment;
 Exchange.Folder = require('./Folders').Folder;
 Exchange.Item = require('./Items').Item;
 Exchange.ItemAttachment = require('./Attachments').ItemAttachment;
-Exchange.ItemBody = ItemHelpers.ItemBody;
-Exchange.Location = ItemHelpers.Location;
+Exchange.ItemBody = Types.ItemBody;
+Exchange.Location = Types.Location;
 Exchange.Message = require('./Messages').Message;
-Exchange.PatternedRecurrence = ItemHelpers.PatternedRecurrence;
-Exchange.PhysicalAddress = ItemHelpers.PhysicalAddress;
-Exchange.Recipient = ItemHelpers.Recipient;
-Exchange.RecurrencePattern = ItemHelpers.RecurrencePattern;
-Exchange.RecurrenceRange = ItemHelpers.RecurrenceRange;
-Exchange.ResponseStatus = ItemHelpers.ResponseStatus;
+Exchange.PatternedRecurrence = Types.PatternedRecurrence;
+Exchange.PhysicalAddress = Types.PhysicalAddress;
+Exchange.Recipient = Types.Recipient;
+Exchange.RecurrencePattern = Types.RecurrencePattern;
+Exchange.RecurrenceRange = Types.RecurrenceRange;
+Exchange.ResponseStatus = Types.ResponseStatus;
 Exchange.User = require('./Users').User;
 
 module.exports = Exchange;

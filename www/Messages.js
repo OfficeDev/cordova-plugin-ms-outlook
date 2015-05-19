@@ -6,11 +6,11 @@ var Fetcher = require('./Fetchers').Fetcher;
 var CollectionFetcher = require('./Fetchers').CollectionFetcher;
 
 var Item = require('./Items').Item;
-var ItemHelpers = require('./ItemHelpers');
+var Types = require('./Types');
 
-var ItemBody = ItemHelpers.ItemBody;
-var Recipient = ItemHelpers.Recipient;
-var MeetingMessageType = ItemHelpers.MeetingMessageType;
+var ItemBody = Types.ItemBody;
+var Recipient = Types.Recipient;
+var MeetingMessageType = Types.MeetingMessageType;
 
 utils.extends(Message, Item);
 function Message(context, path, data) {
@@ -52,9 +52,9 @@ function Message(context, path, data) {
 Message.prototype.preparePayload = function () {
 
     var payload = {
-        Body: this.Body ? ItemHelpers.ItemBody.prototype.preparePayload.call(this.Body) : undefined,
+        Body: this.Body ? Types.ItemBody.prototype.preparePayload.call(this.Body) : undefined,
         Categories: this.Categories,
-        Importance: ItemHelpers.Importance[this.Importance],
+        Importance: Types.Importance[this.Importance],
         Subject: this.Subject,
         From: this.From || undefined,
         Sender: this.Sender || undefined,

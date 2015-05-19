@@ -64,7 +64,7 @@
         <runs />
     </js-module>
 
-    <js-module name="ItemHelpers" src="www/ItemHelpers.js">
+    <js-module name="Types" src="www/Types.js">
         <runs />
     </js-module>
 

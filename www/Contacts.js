@@ -6,7 +6,7 @@ var Item = require('./Items').Item;
 var Fetchers = require('./Fetchers');
 var Fetcher = Fetchers.Fetcher;
 var CollectionFetcher = Fetchers.CollectionFetcher;
-var PhysicalAddress = require('./ItemHelpers').PhysicalAddress;
+var PhysicalAddress = require('./Types').PhysicalAddress;
 
 utils.extends(Contact, Item);
 function Contact(context, path, data) {
