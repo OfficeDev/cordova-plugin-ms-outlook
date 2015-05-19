@@ -3,6 +3,7 @@
 var Users = require('./Users').Users;
 var UserFetcher = require('./Users').UserFetcher;
 var Deferred = require('./utility').Utility.Deferred;
+var ItemHelpers = require('./ItemHelpers');
 
 var Exchange = {
 };
@@ -74,5 +75,42 @@ Object.defineProperty(Client.prototype, "users", {
     enumerable: true,
     configurable: true
 });
+
+// Enums
+Exchange.AttendeeType = ItemHelpers.AttendeeType;
+Exchange.BodyType = ItemHelpers.BodyType;
+Exchange.DayOfWeek = ItemHelpers.DayOfWeek;
+Exchange.EventType = ItemHelpers.EventType;
+Exchange.FreeBusyStatus = ItemHelpers.FreeBusyStatus;
+Exchange.Importance = ItemHelpers.Importance;
+Exchange.MeetingMessageType = ItemHelpers.MeetingMessageType;
+Exchange.RecurrencePatternType = ItemHelpers.RecurrencePatternType;
+Exchange.RecurrenceRangeType = ItemHelpers.RecurrenceRangeType;
+Exchange.ResponseType = ItemHelpers.ResponseType;
+Exchange.WeekIndex = ItemHelpers.WeekIndex;
+
+// Classes
+Exchange.Attachment = require('./Attachments').Attachment;
+Exchange.Attendee = ItemHelpers.Attendee;
+Exchange.Calendar = require('./Calendars').Calendar;
+Exchange.CalendarGroup = require('./CalendarGroups').CalendarGroup;
+Exchange.Contact = require('./Contacts').Contact;
+Exchange.ContactFolder = require('./ContactFolders').ContactFolder;
+Exchange.EmailAddress = ItemHelpers.EmailAddress;
+Exchange.Event = require('./Events').Event;
+Exchange.FileAttachment = require('./Attachments').FileAttachment;
+Exchange.Folder = require('./Folders').Folder;
+Exchange.Item = require('./Items').Item;
+Exchange.ItemAttachment = require('./Attachments').ItemAttachment;
+Exchange.ItemBody = ItemHelpers.ItemBody;
+Exchange.Location = ItemHelpers.Location;
+Exchange.Message = require('./Messages').Message;
+Exchange.PatternedRecurrence = ItemHelpers.PatternedRecurrence;
+Exchange.PhysicalAddress = ItemHelpers.PhysicalAddress;
+Exchange.Recipient = ItemHelpers.Recipient;
+Exchange.RecurrencePattern = ItemHelpers.RecurrencePattern;
+Exchange.RecurrenceRange = ItemHelpers.RecurrenceRange;
+Exchange.ResponseStatus = ItemHelpers.ResponseStatus;
+Exchange.User = require('./Users').User;
 
 module.exports = Exchange;

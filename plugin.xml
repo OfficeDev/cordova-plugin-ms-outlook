@@ -15,17 +15,13 @@
     <dependency id="cordova-plugin-ms-office-rest-client" url="https://github.com/MSOpenTech/cordova-plugin-ms-office-rest-client.git"/>
 
     <js-module name="utility" src="www/utility.js"/>
-
-    <js-module name="Exchange" src="www/Exchange.js">
-        <merges target="Microsoft.OutlookServices" />
-    </js-module>
-
+    
     <js-module name="Entity" src="www/Entity.js">
         <runs />
     </js-module>
 
     <js-module name="Items" src="www/Items.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="Fetchers" src="www/Fetchers.js">
@@ -33,43 +29,47 @@
     </js-module>
 
     <js-module name="Contacts" src="www/Contacts.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="ContactFolders" src="www/ContactFolders.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="Folders" src="www/Folders.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="Calendars" src="www/Calendars.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="CalendarGroups" src="www/CalendarGroups.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="Events" src="www/Events.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="Messages" src="www/Messages.js">
-        <merges target="Microsoft.OutlookServices" />
+       <runs />
     </js-module>
 
     <js-module name="Attachments" src="www/Attachments.js">
-        <merges target="Microsoft.OutlookServices" />
-    </js-module>
-
-    <js-module name="ItemHelpers" src="www/ItemHelpers.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
     </js-module>
 
     <js-module name="Users" src="www/Users.js">
-        <merges target="Microsoft.OutlookServices" />
+        <runs />
+    </js-module>
+
+    <js-module name="ItemHelpers" src="www/ItemHelpers.js">
+        <runs />
+    </js-module>
+
+    <js-module name="Exchange" src="www/Exchange.js">
+        <clobbers target="Microsoft.OutlookServices" />
     </js-module>
 
     <platform name="android">

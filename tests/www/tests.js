@@ -99,15 +99,6 @@ exports.defineAutoTests = function () {
             this.users = this.client.users;
             this.tempEntities = [];
 
-            this.runSafely = function runSafely(testFunc, done) {
-                try {
-                    // Wrapping the call into try/catch to avoid test suite crashes and `hanging` test entities
-                    testFunc(done);
-                } catch (err) {
-                    fail.call(that, done, err);
-                }
-            };
-
             this.createContact = function createContact(displayName) {
                 return new Contacts.Contact(null, null, {
                     GivenName: displayName || guid(),
@@ -242,63 +233,40 @@ exports.defineAutoTests = function () {
                     Microsoft.OutlookServices.ResponseType,
                     Microsoft.OutlookServices.WeekIndex
                 ];
-                for(var i = 0; i < enums.length; i++) {
-                    expect(enums[i]).toBeDefined();
-                    expect(enums[i]).toEqual(jasmine.any(Object));
-                }
+                enums.forEach(function(item) {
+                    expect(item).toBeDefined();
+                    expect(item).toEqual(jasmine.any(Object));
+                });
 
                 var classes = [
                     Microsoft.OutlookServices.Attachment,
-                    //Microsoft.OutlookServices.AttachmentFetcher,
-                    Microsoft.OutlookServices.Attachments,
                     Microsoft.OutlookServices.Attendee,
                     Microsoft.OutlookServices.Calendar,
-                    Microsoft.OutlookServices.CalendarFetcher,
                     Microsoft.OutlookServices.CalendarGroup,
-                    Microsoft.OutlookServices.CalendarGroupFetcher,
-                    Microsoft.OutlookServices.CalendarGroups,
-                    Microsoft.OutlookServices.Calendars,
                     Microsoft.OutlookServices.Client,
                     Microsoft.OutlookServices.Contact,
-                    //Microsoft.OutlookServices.ContactFetcher,
                     Microsoft.OutlookServices.ContactFolder,
-                    Microsoft.OutlookServices.ContactFolderFetcher,
-                    Microsoft.OutlookServices.ContactFolders,
-                    Microsoft.OutlookServices.Contacts,
                     Microsoft.OutlookServices.EmailAddress,
-                    //Microsoft.OutlookServices.Entity,
-                    //Microsoft.OutlookServices.EntityFetcher,
                     Microsoft.OutlookServices.Event,
-                    //Microsoft.OutlookServices.EventFetcher,
-                    Microsoft.OutlookServices.Events,
                     Microsoft.OutlookServices.FileAttachment,
-                    //Microsoft.OutlookServices.FileAttachmentFetcher,
                     Microsoft.OutlookServices.Folder,
-                    Microsoft.OutlookServices.FolderFetcher,
-                    Microsoft.OutlookServices.Folders,
                     Microsoft.OutlookServices.Item,
                     Microsoft.OutlookServices.ItemAttachment,
-                    //Microsoft.OutlookServices.ItemAttachmentFetcher,
                     Microsoft.OutlookServices.ItemBody,
-                    Microsoft.OutlookServices.ItemFetcher,
                     Microsoft.OutlookServices.Location,
                     Microsoft.OutlookServices.Message,
-                    //Microsoft.OutlookServices.MessageFetcher,
-                    Microsoft.OutlookServices.Messages,
                     Microsoft.OutlookServices.PatternedRecurrence,
                     Microsoft.OutlookServices.PhysicalAddress,
                     Microsoft.OutlookServices.Recipient,
                     Microsoft.OutlookServices.RecurrencePattern,
                     Microsoft.OutlookServices.RecurrenceRange,
                     Microsoft.OutlookServices.ResponseStatus,
-                    Microsoft.OutlookServices.User,
-                    Microsoft.OutlookServices.UserFetcher,
-                    Microsoft.OutlookServices.Users
+                    Microsoft.OutlookServices.User
                 ];
-                for(var i = 0; i < classes.length; i++) {
-                    expect(classes[i]).toBeDefined();
-                    expect(classes[i]).toEqual(jasmine.any(Function));
-                }
+                classes.forEach(function(item) {
+                    expect(item).toBeDefined();
+                    expect(item).toEqual(jasmine.any(Function));
+                });
             });
 
             it('should be able to create a new client', function () {
