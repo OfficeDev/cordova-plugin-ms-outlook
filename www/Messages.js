@@ -17,7 +17,18 @@ function Message(context, path, data) {
     Item.call(this, context, path, data);
 
     if (!data) {
+        this.ToRecipients = [];
+        this.CcRecipients = [];
+        this.BccRecipients = [];
+        this.ReplyTo = [];
+
         return;
+    } else {
+        // Initialize arrays
+        data.ToRecipients = data.ToRecipients || [];
+        data.CcRecipients = data.CcRecipients || [];
+        data.BccRecipients = data.BccRecipients || [];
+        data.ReplyTo = data.ReplyTo || [];
     }
 
     this._id = this.Id = data.Id;

@@ -13,7 +13,11 @@ function Contact(context, path, data) {
     Item.call(this, context, path, data);
 
     if (!data) {
+        this.EmailAddresses = [];
         return;
+    } else {
+        // Initialize arrays
+        data.EmailAddresses = data.EmailAddresses || [];
     }
 
     this._id = this.Id = data.Id;

@@ -23,7 +23,11 @@ function Event(context, path, data) {
     Item.call(this, context, path, data);
 
     if (!data) {
+        this.Attendees = [];
         return;
+    } else {
+        // Initialize arrays
+        data.Attendees = data.Attendees || [];
     }
 
     this._id  = this.Id = data.Id;
