@@ -25,6 +25,20 @@ var Attachments = cordova.require('cordova-plugin-ms-outlook.Attachments');
 var ContactFolders = cordova.require('cordova-plugin-ms-outlook.ContactFolders');
 var CalendarGroups = cordova.require('cordova-plugin-ms-outlook.CalendarGroups');
 
+var User = Microsoft.OutlookServices.User,
+    Contact = Microsoft.OutlookServices.Contact,
+    Calendar = Microsoft.OutlookServices.Calendar,
+    CalendarGroup = Microsoft.OutlookServices.CalendarGroup,
+    Event = Microsoft.OutlookServices.Event,
+    Recipient = Microsoft.OutlookServices.Recipient,
+    EmailAddress = Microsoft.OutlookServices.EmailAddress,
+    Message = Microsoft.OutlookServices.Message,
+    ItemBody = Microsoft.OutlookServices.ItemBody,
+    Folder = Microsoft.OutlookServices.Folder,
+    ContactFolder = Microsoft.OutlookServices.ContactFolder,
+    FileAttachment = Microsoft.OutlookServices.FileAttachment,
+    ItemAttachment = Microsoft.OutlookServices.ItemAttachment;
+
 var guid = function () {
     function _p8(s) {
         var p = (Math.random().toString(16) + "000000000").substr(2, 8);
@@ -100,68 +114,77 @@ exports.defineAutoTests = function () {
             this.tempEntities = [];
 
             this.createContact = function createContact(displayName) {
-                return new Contacts.Contact(null, null, {
-                    GivenName: displayName || guid(),
-                    DisplayName: guid(),
-                    EmailAddresses: [{
+                var contact = new Contact();
+
+                contact.GivenName = displayName || guid();
+                contact.DisplayName = guid();
+                contact.EmailAddresses = [
+                    {
                         Address: guid() + "@" + guid() + ".com",
                         Name: guid()
-                    }]
-                });
+                    }
+                ];
+
+                return contact;
             };
 
             this.createCalendar = function createCalendar(name) {
-                return {
-                    Name: name || guid()
-                };
+                var calendar = new Calendar();
+                calendar.Name = name || guid();
+
+                return calendar;
             };
 
             this.createEvent = function createEvent(subject) {
-                return {
-                    Subject: subject || guid(),
-                    Start: new Date(),
-                    End: new Date()
-                };
+                var event = new Event();
+                event.Subject = subject || guid();
+                event.Start = new Date();
+                event.End = new Date();
+
+                return event;
             };
 
             this.createRecipient = function createRecipient(email, name) {
-                return {
-                    EmailAddress: {
-                        Name: name || guid(),
-                        Address: email || (guid() + '@' + guid() + '.' + guid().substr(0, 3))
-                    }
-                };
+                var recipient = new Recipient();
+                recipient.EmailAddress = new EmailAddress();
+                recipient.EmailAddress.Name = name || guid();
+                recipient.EmailAddress.Address = email || (guid() + '@' + guid() + '.' + guid().substr(0, 3));
+
+                return recipient;
             };
 
             this.createMessage = function createMessage(subject) {
-                return {
-                    Subject: subject || guid(),
-                    ToRecipients: [createRecipient()],
-                    Body: {
-                        ContentType: 0,
-                        Content: "Test message"
-                    }
-                };
+                var message = new Message();
+                message.Subject = subject || guid();
+                message.ToRecipients = [createRecipient()];
+                message.Body = new ItemBody();
+                message.Body.ContentType = 0;
+                message.Body.Content = "Test message";
+            
+                return message;
             };
 
             this.createFolder = function createFolder(name) {
-                return {
-                    DisplayName: name || guid()
-                };
+                var folder = new Folder();
+                folder.DisplayName = name || guid();
+
+                return folder;
             };
 
             this.createFileAttachment = function createFileAttachment(text) {
-                return new Attachments.FileAttachment(null, null, {
-                    Name: guid() + ".txt",
-                    ContentBytes: text ? btoa(text) : btoa(guid())
-                });
+                var fileAttachment = new FileAttachment();
+                fileAttachment.Name = guid() + ".txt";
+                fileAttachment.ContentBytes = text ? btoa(text) : btoa(guid());
+
+                return fileAttachment;
             };
 
             this.createItemAttachment = function createItemAttachment(message) {
-                return new Attachments.ItemAttachment(null, null, {
-                    Name: guid(),
-                    Item: message || createMessage()
-                });
+                var itemAttachment = new ItemAttachment();
+                itemAttachment.Name = guid();
+                itemAttachment.Item = message || createMessage();
+
+                return itemAttachment;
             };
 
             client = this.client;
@@ -343,7 +366,7 @@ exports.defineAutoTests = function () {
 
                 it("should successfully fetch current user", function (done) {
                     client.me.fetch().then(function (user) {
-                        expect(user).toEqual(jasmine.any(Users.User));
+                        expect(user).toEqual(jasmine.any(User));
                         expect(user.path).toMatch(new RegExp(OFFICE_ENDPOINT_URL + '/me', "i"));
                         done();
                     }, fail.bind(this, done));
@@ -357,7 +380,7 @@ exports.defineAutoTests = function () {
                     tempEntities.push(added);
                     expect(added.Id).toBeDefined();
                     expect(added.path).toMatch(added.Id);
-                    expect(added).toEqual(jasmine.any(Contacts.Contact));
+                    expect(added).toEqual(jasmine.any(Contact));
                     done();
                 }, fail.bind(this, done));
             });
@@ -369,7 +392,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toBeGreaterThan(0);
-                        expect(c[0]).toEqual(jasmine.any(Contacts.Contact));
+                        expect(c[0]).toEqual(jasmine.any(Contact));
                         done();
                     }, fail.bind(this, done));
                 }, fail.bind(this, done));
@@ -383,7 +406,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toEqual(1);
-                        expect(c[0]).toEqual(jasmine.any(Contacts.Contact));
+                        expect(c[0]).toEqual(jasmine.any(Contact));
                         expect(c[0].Name).toEqual(created.Name);
                         done();
                     }, fail.bind(this, done));
@@ -399,7 +422,7 @@ exports.defineAutoTests = function () {
                             expect(c).toBeDefined();
                             expect(c).toEqual(jasmine.any(Array));
                             expect(c.length).toEqual(1);
-                            expect(c[0]).toEqual(jasmine.any(Contacts.Contact));
+                            expect(c[0]).toEqual(jasmine.any(Contact));
                             done();
                         }, function (err) {
                             expect(err).toBeUndefined();
@@ -465,7 +488,7 @@ exports.defineAutoTests = function () {
                     expect(cf).toBeDefined();
                     expect(cf).toEqual(jasmine.any(Array));
                     expect(cf.length).toBeGreaterThan(0);
-                    expect(cf[0]).toEqual(jasmine.any(ContactFolders.ContactFolder));
+                    expect(cf[0]).toEqual(jasmine.any(ContactFolder));
                     done();
                 }, fail.bind(this, done));
             });
@@ -478,7 +501,7 @@ exports.defineAutoTests = function () {
                         expect(cf).toBeDefined();
                         expect(cf).toEqual(jasmine.any(Array));
                         expect(cf.length).toEqual(1);
-                        expect(cf[0]).toEqual(jasmine.any(ContactFolders.ContactFolder));
+                        expect(cf[0]).toEqual(jasmine.any(ContactFolder));
                         expect(cf[0].DisplayName).toEqual(filterName);
                         done();
                     }, fail.bind(this, done));
@@ -490,7 +513,7 @@ exports.defineAutoTests = function () {
                     expect(cf).toBeDefined();
                     expect(cf).toEqual(jasmine.any(Array));
                     expect(cf.length).toEqual(1);
-                    expect(cf[0]).toEqual(jasmine.any(ContactFolders.ContactFolder));
+                    expect(cf[0]).toEqual(jasmine.any(ContactFolder));
                     done();
                 }, fail.bind(this, done));
             });
@@ -516,7 +539,7 @@ exports.defineAutoTests = function () {
                                 done();
                                 return;
                             }
-                            expect(fetched[0]).toEqual(jasmine.any(ContactFolders.ContactFolder));
+                            expect(fetched[0]).toEqual(jasmine.any(ContactFolder));
                             done();
                         }, fail.bind(this, done));
                     }, fail.bind(this, done));
@@ -584,7 +607,7 @@ exports.defineAutoTests = function () {
                     tempEntities.push(added);
                     expect(added.Id).toBeDefined();
                     expect(added.path).toMatch(added.Id);
-                    expect(added).toEqual(jasmine.any(Calendars.Calendar));
+                    expect(added).toEqual(jasmine.any(Calendar));
                     done();
                 }, fail.bind(this, done));
             });
@@ -596,7 +619,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toBeGreaterThan(0);
-                        expect(c[0]).toEqual(jasmine.any(Calendars.Calendar));
+                        expect(c[0]).toEqual(jasmine.any(Calendar));
                         done();
                     }, fail.bind(this, done));
                 }, fail.bind(this, done));
@@ -610,7 +633,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toEqual(1);
-                        expect(c[0]).toEqual(jasmine.any(Calendars.Calendar));
+                        expect(c[0]).toEqual(jasmine.any(Calendar));
                         expect(c[0].Name).toEqual(created.Name);
                         done();
                     }, fail.bind(this, done));
@@ -626,7 +649,7 @@ exports.defineAutoTests = function () {
                             expect(c).toBeDefined();
                             expect(c).toEqual(jasmine.any(Array));
                             expect(c.length).toEqual(1);
-                            expect(c[0]).toEqual(jasmine.any(Calendars.Calendar));
+                            expect(c[0]).toEqual(jasmine.any(Calendar));
                             done();
                         }, fail.bind(this, done));
                     }, fail.bind(this, done));
@@ -682,7 +705,7 @@ exports.defineAutoTests = function () {
                     tempEntities.push(added);
                     expect(added.Id).toBeDefined();
                     expect(added.path).toMatch(added.Id);
-                    expect(added).toEqual(jasmine.any(CalendarGroups.CalendarGroup));
+                    expect(added).toEqual(jasmine.any(CalendarGroup));
                     done();
                 }, fail.bind(this, done));
             });
@@ -694,7 +717,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toBeGreaterThan(0);
-                        expect(c[0]).toEqual(jasmine.any(CalendarGroups.CalendarGroup));
+                        expect(c[0]).toEqual(jasmine.any(CalendarGroup));
                         done();
                     }, fail.bind(this, done));
                 }, fail.bind(this, done));
@@ -708,7 +731,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toEqual(1);
-                        expect(c[0]).toEqual(jasmine.any(CalendarGroups.CalendarGroup));
+                        expect(c[0]).toEqual(jasmine.any(CalendarGroup));
                         expect(c[0].Name).toEqual(created.Name);
                         done();
                     }, fail.bind(this, done));
@@ -724,7 +747,7 @@ exports.defineAutoTests = function () {
                             expect(c).toBeDefined();
                             expect(c).toEqual(jasmine.any(Array));
                             expect(c.length).toEqual(1);
-                            expect(c[0]).toEqual(jasmine.any(CalendarGroups.CalendarGroup));
+                            expect(c[0]).toEqual(jasmine.any(CalendarGroup));
                             done();
                         }, fail.bind(this, done));
                     }, fail.bind(this, done));
@@ -780,7 +803,7 @@ exports.defineAutoTests = function () {
                             //tempEntities.unshift(createdCal);
                             createdGroup.calendars.getCalendar(createdCal.Id).fetch().then(function (fetchedCal) {
                                 expect(fetchedCal).toBeDefined();
-                                expect(fetchedCal).toEqual(jasmine.any(Calendars.Calendar));
+                                expect(fetchedCal).toEqual(jasmine.any(Calendar));
                                 expect(fetchedCal.Name).toEqual(createdCal.Name);
 
                                 // Workaround for afterEach cleanup, which is not consecutive
@@ -800,7 +823,7 @@ exports.defineAutoTests = function () {
                     tempEntities.push(added);
                     expect(added.Id).toBeDefined();
                     expect(added.path).toMatch(added.Id);
-                    expect(added).toEqual(jasmine.any(Events.Event));
+                    expect(added).toEqual(jasmine.any(Event));
                     done();
                 }, fail.bind(this, done));
             });
@@ -812,7 +835,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toBeGreaterThan(0);
-                        expect(c[0]).toEqual(jasmine.any(Events.Event));
+                        expect(c[0]).toEqual(jasmine.any(Event));
                         done();
                     }, fail.bind(this, done));
                 }, fail.bind(this, done));
@@ -826,7 +849,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toEqual(1);
-                        expect(c[0]).toEqual(jasmine.any(Events.Event));
+                        expect(c[0]).toEqual(jasmine.any(Event));
                         expect(c[0].Name).toEqual(created.Name);
                         done();
                     }, fail.bind(this, done));
@@ -842,7 +865,7 @@ exports.defineAutoTests = function () {
                             expect(c).toBeDefined();
                             expect(c).toEqual(jasmine.any(Array));
                             expect(c.length).toEqual(1);
-                            expect(c[0]).toEqual(jasmine.any(Events.Event));
+                            expect(c[0]).toEqual(jasmine.any(Event));
                             done();
                         }, fail.bind(this, done));
                     }, fail.bind(this, done));
@@ -1012,7 +1035,7 @@ exports.defineAutoTests = function () {
                     tempEntities.push(added);
                     expect(added.Id).toBeDefined();
                     expect(added.path).toMatch(added.Id);
-                    expect(added).toEqual(jasmine.any(Messages.Message));
+                    expect(added).toEqual(jasmine.any(Message));
                     done();
                 }, fail.bind(this, done));
             });
@@ -1024,7 +1047,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toBeGreaterThan(0);
-                        expect(c[0]).toEqual(jasmine.any(Messages.Message));
+                        expect(c[0]).toEqual(jasmine.any(Message));
                         done();
                     }, fail.bind(this, done));
                 }, fail.bind(this, done));
@@ -1038,7 +1061,7 @@ exports.defineAutoTests = function () {
                         expect(c).toBeDefined();
                         expect(c).toEqual(jasmine.any(Array));
                         expect(c.length).toEqual(1);
-                        expect(c[0]).toEqual(jasmine.any(Messages.Message));
+                        expect(c[0]).toEqual(jasmine.any(Message));
                         expect(c[0].Name).toEqual(created.Name);
                         done();
                     }, fail.bind(this, done));
@@ -1054,7 +1077,7 @@ exports.defineAutoTests = function () {
                             expect(c).toBeDefined();
                             expect(c).toEqual(jasmine.any(Array));
                             expect(c.length).toEqual(1);
-                            expect(c[0]).toEqual(jasmine.any(Messages.Message));
+                            expect(c[0]).toEqual(jasmine.any(Message));
                             expect(c[0].Subject).toEqual(created2.Subject);
                             done();
                         }, fail.bind(this, done));
@@ -1142,8 +1165,7 @@ exports.defineAutoTests = function () {
                                         messages.getMessage(reply.Id).fetch().then(function (fetchedReply) {
                                             expect(fetchedReply).toBeDefined();
                                             expect(fetchedReply.Subject).toMatch(msgToSend.Subject);
-                                            expect(fetchedReply.ToRecipients[0])
-                                                .toEqual(jasmine.objectContaining(msgToSend.ToRecipients[0]));
+                                            expect(fetchedReply.ToRecipients[0]).toEqual(msgToSend.ToRecipients[0]);
                                             done();
                                         }, fail.bind(this, done));
                                     }, fail.bind(this, done));
@@ -1172,8 +1194,7 @@ exports.defineAutoTests = function () {
                                         messages.getMessage(reply.Id).fetch().then(function (fetchedReply) {
                                             expect(fetchedReply).toBeDefined();
                                             expect(fetchedReply.Subject).toMatch(msgToSend.Subject);
-                                            expect(fetchedReply.CcRecipients[0])
-                                                .toEqual(jasmine.objectContaining(msgToSend.CcRecipients[0]));
+                                            expect(fetchedReply.CcRecipients[0]).toEqual(msgToSend.CcRecipients[0]);
                                             done();
                                         }, fail.bind(this, done));
                                     }, fail.bind(this, done));
@@ -1386,7 +1407,7 @@ exports.defineAutoTests = function () {
                     expect(f).toBeDefined();
                     expect(f).toEqual(jasmine.any(Array));
                     expect(f.length).toBeGreaterThan(0);
-                    expect(f[0]).toEqual(jasmine.any(Folders.Folder));
+                    expect(f[0]).toEqual(jasmine.any(Folder));
                     done();
                 }, fail.bind(this, done));
             });
@@ -1397,7 +1418,7 @@ exports.defineAutoTests = function () {
                     tempEntities.push(f);
                     folders.getFolder(f.Id).fetch().then(function (fetched) {
                         expect(fetched).toBeDefined();
-                        expect(fetched).toEqual(jasmine.any(Folders.Folder));
+                        expect(fetched).toEqual(jasmine.any(Folder));
                         expect(fetched.DisplayName).toEqual(newFolder.DisplayName);
                         done();
                     }, fail.bind(this, done));
@@ -1412,7 +1433,7 @@ exports.defineAutoTests = function () {
                         expect(f).toBeDefined();
                         expect(f).toEqual(jasmine.any(Array));
                         expect(f.length).toEqual(1);
-                        expect(f[0]).toEqual(jasmine.any(Folders.Folder));
+                        expect(f[0]).toEqual(jasmine.any(Folder));
                         expect(f[0].DisplayName).toEqual(filterName);
                         done();
                     }, fail.bind(this, done));
@@ -1424,7 +1445,7 @@ exports.defineAutoTests = function () {
                     expect(cf).toBeDefined();
                     expect(cf).toEqual(jasmine.any(Array));
                     expect(cf.length).toEqual(1);
-                    expect(cf[0]).toEqual(jasmine.any(Folders.Folder));
+                    expect(cf[0]).toEqual(jasmine.any(Folder));
                     done();
                 }, fail.bind(this, done));
             });
@@ -1553,7 +1574,7 @@ exports.defineAutoTests = function () {
                                 done();
                                 return;
                             }
-                            expect(fetched[0]).toEqual(jasmine.any(Folders.Folder));
+                            expect(fetched[0]).toEqual(jasmine.any(Folder));
                             done();
                         }, fail.bind(this, done));
                     }, fail.bind(this, done));
@@ -1584,7 +1605,7 @@ exports.defineAutoTests = function () {
                             tempEntities.push(created);
                             inbox.messages.getMessage(created.Id).fetch().then(function (fetched) {
                                 expect(fetched).toBeDefined();
-                                expect(fetched).toEqual(jasmine.any(Messages.Message));
+                                expect(fetched).toEqual(jasmine.any(Message));
                                 expect(fetched.Subject).toEqual(created.Subject);
                                 done();
                             }, fail.bind(this, done));
@@ -1615,7 +1636,7 @@ exports.defineAutoTests = function () {
                     var fileAttachment = createFileAttachment();
                     added.attachments.addAttachment(fileAttachment).then(function (attachment) {
                         expect(attachment).toBeDefined();
-                        expect(attachment).toEqual(jasmine.any(Attachments.FileAttachment));
+                        expect(attachment).toEqual(jasmine.any(FileAttachment));
                         expect(attachment.Name).toEqual(fileAttachment.Name);
                         expect(attachment.ContentBytes).toEqual(fileAttachment.ContentBytes);
                         done();
@@ -1629,7 +1650,7 @@ exports.defineAutoTests = function () {
                     var fileAttachment = createFileAttachment();
                     added.attachments.addAttachment(fileAttachment).then(function (attachment) {
                         expect(attachment).toBeDefined();
-                        expect(attachment).toEqual(jasmine.any(Attachments.FileAttachment));
+                        expect(attachment).toEqual(jasmine.any(FileAttachment));
                         expect(attachment.Name).toEqual(fileAttachment.Name);
                         expect(attachment.ContentBytes).toEqual(fileAttachment.ContentBytes);
                         done();
@@ -1645,7 +1666,7 @@ exports.defineAutoTests = function () {
                     var itemAttachment = createItemAttachment(item);
                     added.attachments.addAttachment(itemAttachment).then(function (attachment) {
                         expect(attachment).toBeDefined();
-                        expect(attachment).toEqual(jasmine.any(Attachments.ItemAttachment));
+                        expect(attachment).toEqual(jasmine.any(ItemAttachment));
                         expect(attachment.Name).toEqual(itemAttachment.Name);
                         done();
                     }, fail.bind(this, done));
@@ -1660,7 +1681,7 @@ exports.defineAutoTests = function () {
                     var itemAttachment = createItemAttachment(item);
                     added.attachments.addAttachment(itemAttachment).then(function (attachment) {
                         expect(attachment).toBeDefined();
-                        expect(attachment).toEqual(jasmine.any(Attachments.FileAttachment));
+                        expect(attachment).toEqual(jasmine.any(FileAttachment));
                         expect(attachment.Name).toEqual(itemAttachment.Name);
                         done();
                     }, fail.bind(this, done));
@@ -1770,7 +1791,7 @@ exports.defineAutoTests = function () {
                         messages.getMessage(added.Id).fetch().then(function (created) {
                             expect(created.HasAttachments).toBeTruthy();
                             created.attachments.getAttachment(addedAttachment.Id).fetch().then(function (createdAttachment) {
-                                expect(createdAttachment).toEqual(jasmine.any(Attachments.FileAttachment));
+                                expect(createdAttachment).toEqual(jasmine.any(FileAttachment));
                                 expect(createdAttachment.Name).toEqual(fileAttachment.Name);
                                 expect(createdAttachment.ContentBytes).toEqual(fileAttachment.ContentBytes);
                                 done();
@@ -1790,7 +1811,7 @@ exports.defineAutoTests = function () {
                         addedAttachment.Name = guid();
                         addedAttachment.update().then(function (updatedAttachment) {
                             expect(updatedAttachment).toBeDefined();
-                            expect(updatedAttachment).toEqual(jasmine.any(Attachments.Attachment));
+                            expect(updatedAttachment).toEqual(jasmine.any(Attachment));
                             expect(updatedAttachment.name).toEqual(addedAttachment.Name);
                             done();
                         }, fail.bind(this, done));
@@ -1807,7 +1828,7 @@ exports.defineAutoTests = function () {
                         addedAttachment.Name = guid();
                         addedAttachment.update().then(function (updatedAttachment) {
                             expect(updatedAttachment).toBeDefined();
-                            expect(updatedAttachment).toEqual(jasmine.any(Attachments.Attachment));
+                            expect(updatedAttachment).toEqual(jasmine.any(Attachment));
                             expect(updatedAttachment.name).toEqual(addedAttachment.Name);
                             done();
                         }, fail.bind(this, done));
@@ -1863,7 +1884,7 @@ exports.defineAutoTests = function () {
                     expect(usersList).toBeDefined();
                     expect(usersList).toEqual(jasmine.any(Array));
                     expect(usersList.length).toBeGreaterThan(1);
-                    expect(usersList[0]).toEqual(jasmine.any(Users.User));
+                    expect(usersList[0]).toEqual(jasmine.any(User));
                     done();
                 }, fail.bind(this, done));
             });
@@ -1872,7 +1893,7 @@ exports.defineAutoTests = function () {
                 users.getUsers().fetchAll().then(function (usersList) {
                     users.getUser(usersList[0].Id).fetch().then(function (user) {
                         expect(user).toBeDefined();
-                        expect(user).toEqual(jasmine.any(Users.User));
+                        expect(user).toEqual(jasmine.any(User));
                         expect(user.Id).toEqual(usersList[0].Id);
                         done();
                     }, fail.bind(this, done));

@@ -27,10 +27,8 @@ function EmailAddress(data) {
         return;
     }
 
-    return {
-        Name: data.EmailAddress.Name,
-        Address: data.EmailAddress.Address
-    };
+    this.Name = data.EmailAddress.Name;
+    this.Address = data.EmailAddress.Address;
 }
 
 function Recipient(data) {
@@ -38,7 +36,7 @@ function Recipient(data) {
         return;
     }
 
-    this.EmailAddress = EmailAddress(data); 
+    this.EmailAddress = new EmailAddress(data); 
 }
 
 Recipient.prototype.preparePayload = function () {
