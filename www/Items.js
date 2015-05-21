@@ -4,9 +4,9 @@ var utils = require('./utility');
 var Entity = require('./Entity');
 var Fetchers = require('./Fetchers');
 var Fetcher = Fetchers.Fetcher;
-var ItemHelpers = require('./ItemHelpers');
-var ItemBody = ItemHelpers.ItemBody;
-var Importance = ItemHelpers.Importance;
+var Types = require('./Types');
+var ItemBody = Types.ItemBody;
+var Importance = Types.Importance;
 
 utils.extends(Item, Entity);
 function Item(context, path, data) {

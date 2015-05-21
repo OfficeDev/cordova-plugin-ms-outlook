@@ -8,22 +8,26 @@ var Fetchers = require('./Fetchers');
 var Fetcher = Fetchers.Fetcher;
 var CollectionFetcher = Fetchers.CollectionFetcher;
 
-var ItemHelpers = require('./ItemHelpers');
+var Types = require('./Types');
 
-var ItemBody = ItemHelpers.ItemBody;
-var Attendee = ItemHelpers.Attendee;
-var Recipient = ItemHelpers.Recipient;
-var Location = ItemHelpers.Location;
-var EventType = ItemHelpers.EventType;
-var FreeBusyStatus = ItemHelpers.FreeBusyStatus;
-var PatternedRecurrence = ItemHelpers.PatternedRecurrence;
+var ItemBody = Types.ItemBody;
+var Attendee = Types.Attendee;
+var Recipient = Types.Recipient;
+var Location = Types.Location;
+var EventType = Types.EventType;
+var FreeBusyStatus = Types.FreeBusyStatus;
+var PatternedRecurrence = Types.PatternedRecurrence;
 
 utils.extends(Event, Item);
 function Event(context, path, data) {
     Item.call(this, context, path, data);
 
     if (!data) {
+        this.Attendees = [];
         return;
+    } else {
+        // Initialize arrays
+        data.Attendees = data.Attendees || [];
     }
 
     this._id  = this.Id = data.Id;
@@ -50,7 +54,7 @@ Event.prototype.preparePayload = function () {
     var payload = {
         Body: this.Body ? ItemBody.prototype.preparePayload.call(this.Body) : undefined,
         Categories: this.Categories,
-        Importance: ItemHelpers.Importance[this.Importance],
+        Importance: Types.Importance[this.Importance],
         Subject: this.Subject,
         Attendees: this.Attendees,
         End: this.End,
@@ -63,9 +67,9 @@ Event.prototype.preparePayload = function () {
         ResponseRequested: this.ResponseRequested,
         SeriesMasterId: this.SeriesMasterId,
         SeriesId: this.SeriesId,
-        ShowAs: ItemHelpers.FreeBusyStatus[this.ShowAs],
+        ShowAs: Types.FreeBusyStatus[this.ShowAs],
         Start: this.Start,
-        Type: ItemHelpers.EventType[this.Type]
+        Type: Types.EventType[this.Type]
     };
     return payload;
 };

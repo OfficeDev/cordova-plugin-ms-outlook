@@ -6,14 +6,18 @@ var Item = require('./Items').Item;
 var Fetchers = require('./Fetchers');
 var Fetcher = Fetchers.Fetcher;
 var CollectionFetcher = Fetchers.CollectionFetcher;
-var PhysicalAddress = require('./ItemHelpers').PhysicalAddress;
+var PhysicalAddress = require('./Types').PhysicalAddress;
 
 utils.extends(Contact, Item);
 function Contact(context, path, data) {
     Item.call(this, context, path, data);
 
     if (!data) {
+        this.EmailAddresses = [];
         return;
+    } else {
+        // Initialize arrays
+        data.EmailAddresses = data.EmailAddresses || [];
     }
 
     this._id = this.Id = data.Id;

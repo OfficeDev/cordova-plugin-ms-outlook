@@ -22,15 +22,21 @@ ItemBody.prototype.preparePayload = function() {
     };
 };
 
+function EmailAddress(data) {
+    if (!data) {
+        return;
+    }
+
+    this.Name = data.EmailAddress.Name;
+    this.Address = data.EmailAddress.Address;
+}
+
 function Recipient(data) {
     if (!data) {
         return;
     }
-    
-    this.EmailAddress = {
-        Name: data.EmailAddress.Name,
-        Address: data.EmailAddress.Address
-    };
+
+    this.EmailAddress = new EmailAddress(data); 
 }
 
 Recipient.prototype.preparePayload = function () {
@@ -43,7 +49,7 @@ Recipient.prototype.preparePayload = function () {
 utils.extends(Attendee, Recipient);
 function Attendee (data) {
     Recipient.call(this, data);
-    
+
     if (!data) {
         return;
     }
@@ -210,5 +216,5 @@ module.exports.ItemBody = ItemBody;
 module.exports.Importance = Importance;
 module.exports.MeetingMessageType = MeetingMessageType;
 module.exports.Recipient = Recipient;
-
-
+module.exports.EmailAddress = EmailAddress;
+module.exports.ResponseStatus = ResponseStatus;
