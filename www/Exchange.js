@@ -21,6 +21,11 @@ function DataContext(serviceRootUri, authContext, resourceUrl, appId, redirectUr
                 return item.clientId === appId && item.resource === resourceUrl;
             })[0];
 
+            correspondingCacheItem = correspondingCacheItem || tokenCacheItems.filter(function (item) {
+                return item.clientId === appId && item.isMultipleResourceRefreshToken === true 
+                    && item.authority.replace(/\/?$/, '/') === authContext.authority.replace(/\/?$/, '/'); // Ensuring trailing slash exists
+            })[0];
+
             if (correspondingCacheItem == null) {
                 authContext.acquireTokenAsync(resourceUrl, appId, redirectUrl).then(function (authResult) {
                     d.resolve(authResult.accessToken);
