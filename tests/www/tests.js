@@ -32,6 +32,7 @@ var User = Microsoft.OutlookServices.User,
     Event = Microsoft.OutlookServices.Event,
     Recipient = Microsoft.OutlookServices.Recipient,
     EmailAddress = Microsoft.OutlookServices.EmailAddress,
+    BodyType = Microsoft.OutlookServices.BodyType,
     Message = Microsoft.OutlookServices.Message,
     ItemBody = Microsoft.OutlookServices.ItemBody,
     Folder = Microsoft.OutlookServices.Folder,
@@ -99,7 +100,6 @@ exports.defineAutoTests = function () {
         }
 
         beforeEach(function () {
-            var that = this;
             this.client = new Microsoft.OutlookServices.Client(OFFICE_ENDPOINT_URL,
                 new AuthenticationContext(AUTH_URL), RESOURCE_URL, APP_ID, REDIRECT_URL);
 
@@ -118,12 +118,12 @@ exports.defineAutoTests = function () {
 
                 contact.GivenName = displayName || guid();
                 contact.DisplayName = guid();
-                contact.EmailAddresses = [
-                    {
-                        Address: guid() + "@" + guid() + ".com",
-                        Name: guid()
-                    }
-                ];
+
+                var emailAddress = new EmailAddress();
+                emailAddress.Address = guid() + "@" + guid() + ".com";
+                emailAddress.Name = guid();
+
+                contact.EmailAddresses.push(emailAddress);
 
                 return contact;
             };
@@ -158,9 +158,9 @@ exports.defineAutoTests = function () {
                 message.Subject = subject || guid();
                 message.ToRecipients = [createRecipient()];
                 message.Body = new ItemBody();
-                message.Body.ContentType = 0;
+                message.Body.ContentType = BodyType.Text;
                 message.Body.Content = "Test message";
-            
+
                 return message;
             };
 
@@ -439,7 +439,9 @@ exports.defineAutoTests = function () {
                     contacts.getContact(added.Id).fetch().then(function (got) {
                         expect(got.GivenName).toEqual(newContact.GivenName);
                         expect(got.DisplayName).toEqual(newContact.DisplayName);
-                        expect(got.EmailAddresses[0]).toEqual(newContact.EmailAddresses[0]);
+                        expect(got.EmailAddresses[0]).toBeDefined();
+                        expect(got.EmailAddresses[0].Address).toEqual(newContact.EmailAddresses[0].Address);
+                        expect(got.EmailAddresses[0].Name).toEqual(newContact.EmailAddresses[0].Name);
                         done();
                     }, fail.bind(this, done));
                 }, fail.bind(this, done));
