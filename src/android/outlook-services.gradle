@@ -1,6 +1,0 @@
-repositories {
-    jcenter()
-}
-dependencies {
-    compile('com.microsoft.services:outlook-services:0.12.1') {}
-}

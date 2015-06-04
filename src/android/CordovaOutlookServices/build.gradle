@@ -1,0 +1,15 @@
+// Copyright (c) Microsoft Open Technologies, Inc.  All Rights Reserved.
+// Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
+
+// Note: This file will be overwritten by cordova;
+// use 'build-extras.gradle' if you want to modify plugin gradle settings
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'java'
+
+dependencies {
+    compile('com.microsoft.services:outlook-services:0.12.1') {}
+}
