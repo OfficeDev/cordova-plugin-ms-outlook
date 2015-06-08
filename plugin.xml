@@ -3,7 +3,7 @@
  Copyright (c) Microsoft Open Technologies, Inc.  All Rights Reserved. 
  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 -->
-<plugin id="cordova-plugin-ms-outlook" version="0.5.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-ms-outlook" version="0.6.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>Office365 Outlook for Cordova</name>
     <description>Microsoft Office 365 Outlook Services Client for Apache Cordova</description>
 
@@ -12,7 +12,7 @@
     <repo>https://github.com/OfficeDev/cordova-plugin-ms-outlook</repo>
     <issue>https://github.com/OfficeDev/cordova-plugin-ms-outlook/issues</issue>
 
-    <dependency id="cordova-plugin-ms-office-rest-client" url="https://github.com/MSOpenTech/cordova-plugin-ms-office-rest-client.git"/>
+    <dependency id="cordova-plugin-ms-office-rest-client" url="https://github.com/MSOpenTech/cordova-plugin-ms-office-rest-client.git#0.2.x"/>
 
     <js-module name="utility" src="www/utility.js"/>
     

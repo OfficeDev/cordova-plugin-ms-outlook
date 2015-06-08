@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-ms-outlook",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Microsoft Office 365 Outlook Services Client for Apache Cordova",
   "cordova": {
     "id": "cordova-plugin-ms-outlook",
