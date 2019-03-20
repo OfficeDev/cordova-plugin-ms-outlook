@@ -1,3 +1,14 @@
+---
+topic: sample
+products:
+- Office 365
+- Outlook
+languages:
+- JavaScript
+extensions:
+  contentType: tools
+  createdDate: 4/23/2015 8:16:04 AM
+---
 Apache Cordova plugin for Office 365 Outlook Services
 =============================
 Provides JavaScript API to work with Microsoft Office 365 Outlook Services: Mail, Calandar, Contacts and Events.
