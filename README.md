@@ -9,20 +9,21 @@ extensions:
   contentType: tools
   createdDate: 4/23/2015 8:16:04 AM
 ---
-Apache Cordova plugin for Office 365 Outlook Services
-=============================
+# Apache Cordova plugin for Office 365 Outlook Services
+
 Provides JavaScript API to work with Microsoft Office 365 Outlook Services: Mail, Calandar, Contacts and Events.
-<!--
-TODO review api compliance to 
-http://msdn.microsoft.com/en-us/office/office365/howto/common-mail-tasks-client-library
--->
-####Supported Platforms####
+
+> [!NOTE]
+> We're no longer updating this content regularly. Check the [Microsoft Product Lifecycle](https://developer.microsoft.com/graph/docs/concepts/overview) for information about how this product, service, technology, or API is supported.
+
+## Supported Platforms
 
 - Android (cordova-android@>=4.0.0 is supported)
 - iOS
 - Windows (Windows 8.0, Windows 8.1 and Windows Phone 8.1)
 
 ## Sample usage ##
+
 To access the Mail API you need to acquire an access token and get the Outlook Services client. Then, you can send async queries to interact with mail data. Note: application ID, authorization and redirect URIs are assigned when you register your app with Microsoft Azure Active Directory.
 
 ```javascript
@@ -45,9 +46,10 @@ outlookClient.me.folders.getFolder('Inbox').messages.getMessages().fetchAll().th
     console.error(error);
 });
 ```
-Complete example is available [here](https://github.com/MSOpenTech/cordova-office-samples/tree/master/outlook-services/mailbox).
 
-## Installation Instructions ##
+Complete example is available in the [cordova-office-samples](https://github.com/MSOpenTech/cordova-office-samples/tree/master/outlook-services/mailbox) repo in GitHub.
+
+## Installation instructions
 
 Use [Apache Cordova CLI](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html) to create your app and add the plugin.
 
@@ -73,7 +75,7 @@ Use [Apache Cordova CLI](http://cordova.apache.org/docs/en/edge/guide_cli_index.
 
 To learn more, read [Apache Cordova CLI Usage Guide](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html).
 
-## Copyrights ##
+## Copyrights
 Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use these files except in compliance with the License. You may obtain a copy of the License at
